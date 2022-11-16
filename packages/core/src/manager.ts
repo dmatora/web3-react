@@ -105,6 +105,7 @@ async function augmentConnectorUpdate(
 
   const chainId = normalizeChainId(_chainId)
   if (!!connector.supportedChainIds && !connector.supportedChainIds.includes(chainId)) {
+    console.log('test1:', connector.supportedChainIds)
     throw new UnsupportedChainIdError(chainId, connector.supportedChainIds)
   }
   const account = _account === null ? _account : normalizeAccount(_account)
@@ -181,6 +182,7 @@ export function useWeb3ReactManager(): Web3ReactManagerReturn {
       if (!error) {
         const chainId = update.chainId === undefined ? undefined : normalizeChainId(update.chainId)
         if (chainId !== undefined && !!connector.supportedChainIds && !connector.supportedChainIds.includes(chainId)) {
+          console.log('test2:', connector.supportedChainIds)
           const error = new UnsupportedChainIdError(chainId, connector.supportedChainIds)
           onError ? onError(error) : dispatch({ type: ActionType.ERROR, payload: { error } })
         } else {
