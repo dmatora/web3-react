@@ -15,6 +15,8 @@ class StaleConnectorError extends Error {
 
 export class UnsupportedChainIdError extends Error {
   public constructor(unsupportedChainId: number, supportedChainIds?: readonly number[]) {
+    console.log('unsupportedChainId:', unsupportedChainId)
+    console.log('supportedChainIds:', supportedChainIds)
     super()
     this.name = this.constructor.name
     this.message = `Unsupported chain id: ${unsupportedChainId}. Supported chain ids are: ${supportedChainIds}.`
@@ -103,7 +105,9 @@ async function augmentConnectorUpdate(
     update.account === undefined ? connector.getAccount() : update.account
   ])) as [Required<ConnectorUpdate>['chainId'], Required<ConnectorUpdate>['account']]
 
+  console.log('_chainId:', _chainId)
   const chainId = normalizeChainId(_chainId)
+  console.log('chainId:', chainId)
   if (!!connector.supportedChainIds && !connector.supportedChainIds.includes(chainId)) {
     console.log('test1:', connector.supportedChainIds)
     throw new UnsupportedChainIdError(chainId, connector.supportedChainIds)
